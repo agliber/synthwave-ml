@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 // set input (linked from external source)
 const WHIP_IT_SEQUENCE = whipIt;
 const FREEDOM_OF_CHOICE_SEQUENCE = freedomOfChoice;

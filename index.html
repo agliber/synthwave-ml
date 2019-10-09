@@ -4,23 +4,23 @@
 <head>
   <link href="synthWaveGeneratorVAE.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.7.0"></script>
-  <script type="text/javascript" src="synthWaveGeneratorVAE.js"></script>
 </head>
 
   <body>
     <!-- loading animation visual. By default not displayed. Display triggered by showLoading() -->
     <div id="loader" >
-      <div class="load-1">
+      <!-- <div class="load-1">
         <p>Loading...</p>
         <br />
         <!-- first line is invisible. used for vertical alignment purposes -->
-        <div class="line" style="height:65px;width:0px;background-color: rgb(255,0,0,0);"></div>
+        <!-- <div class="line" style="height:65px;width:0px;background-color: rgb(255,0,0,0);"></div>
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
-      </div>
+      </div> --> -->
+      <img src="./loader.gif" width="200px" />
     </div>
 
     <div id="container">
@@ -125,4 +125,9 @@
 
     </div> <!-- container -->
   </body>
+  <script type="text/javascript" src="./whipItSequence.js"></script>
+  <script type="text/javascript" src="./freedomOfChoiceSequence.js"></script>
+  <script type="text/javascript" src="./beautifulWorldSequence.js"></script>
+  <script type="text/javascript" src="./gutFeelingSequence.js"></script>
+  <script type="text/javascript" src="./synthWaveGeneratorVAE.js"></script>
 </html>
