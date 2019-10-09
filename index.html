@@ -2,7 +2,12 @@
 <html>
 
 <head>
-  <link href="synthWaveGeneratorVAE.css" rel="stylesheet">
+  <!-- <link href="synthWaveGeneratorVAE.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.7.0"></script>
 </head>
 
@@ -25,103 +30,109 @@
 
     <div id="container">
 
+
+      <div class="custom-control custom-switch">
+        <input type="checkbox" checked="checked" class="custom-control-input" name="player" id="synth" value="synth" onclick="toggleSoundFont()">
+        <label class="custom-control-label" for="synth">Sound Font Player</label>
+        <!-- <label><input type="radio" name="player" value="soundFont" id="soundFont" onclick="toggleSoundFont()">SoundFontPlayer</label> -->
+      </div>
+
       <!-- Begin original Section   -->
-      <div class="radioGroup">
-        <label> <input type="radio" name="player" id="synth" value="synth" checked="checked" onclick="toggleSoundFont()"> Synth</label>
-        <label><input type="radio" name="player" value="soundFont" id="soundFont" onclick="toggleSoundFont()">SoundFontPlayer</label>
+      <div class="card overflow-hidden">
+        <div class="card-header">
+          <div class="input-group">
+
+            <div id="originalSelect" class="select-style">
+              <select class="custom-select custom-select">
+                <option value="0">Whip It</option>
+                <option value="1">Freedom Of Choice</option>
+                <option value="2">Beautiful World</option>
+                <option value="3">Gut Feeling</option>
+              </select>
+            </div>
+
+            <div class="input-group-append" role="group">
+              <button class="btn btn-secondary" onclick="playOriginal()"> Play original input </button>
+              <button class="btn btn-secondary" onclick="stop()">Stop </button>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-body overflow-hidden">
+          <canvas id="originalCanvas"></canvas>
+        </div>
       </div>
 
-      <br />
-      <hr style="border-color:white;" />
-      <br />
-
-      <div id="originalSelect" class="select-style">
-        <select>
-          <option value="0">Whip It</option>
-          <option value="1">Freedom Of Choice</option>
-          <option value="2">Beautiful World</option>
-          <option value="3">Gut Feeling</option>
-        </select>
-      </div>
-
-      <button onclick="playOriginal()"> Play original input </button>
-      <button onclick="stop()">Stop </button>
-
-      <br />
-
-      <input type="range" min="0" max="20" value="0" class="slider" id="trimStart">
-      <p>Trim start (s): <span class="sliderValue"></span></p>
-
-      <br />
-
-      <canvas id="originalCanvas"></canvas>
-
-      <hr />
-      <hr />
 
       <!-- Begin Interpolate Section   -->
 
-      <div id="interpolateSelect1" class="select-style">
-        <select>
-          <option value="0" selected="selected">Whip It</option>
-          <option value="1">Freedom Of Choice</option>
-          <option value="2">Beautiful World</option>
-          <option value="3">Gut Feeling</option>
-        </select>
+      <div class="card">
+        <div class="card-header" >
+          <div class="input-group">
+            <div id="interpolateSelect1" class="select-style">
+              <select class="custom-select custom-select">
+                <option value="0" selected="selected">Whip It</option>
+                <option value="1">Freedom Of Choice</option>
+                <option value="2">Beautiful World</option>
+                <option value="3">Gut Feeling</option>
+              </select>
+            </div>
+            <div id="interpolateSelect2" class="select-style">
+              <select class="custom-select custom-select">
+                <option value="0">Whip It</option>
+                <option value="1" selected="selected">Freedom Of Choice</option>
+                <option value="2">Beautiful World</option>
+                <option value="3">Gut Feeling</option>
+              </select>
+            </div>
+            <div class="btn-group input-group-append">
+              <button class="btn btn-secondary" onclick="interpolate()"> Interpolate Input </button>
+              <button class="btn btn-secondary" onclick="playInterpolation()">  Play Interpolation  </button>
+              <button class="btn btn-secondary"onclick="stop()">Stop </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-header">
+          <input type="range" min="5" max="20" value="10" data-multiplier="0.1" class="slider" id="vaeTemp">
+          <p>Temperature: <span class="sliderValue"></span></p>
+
+          <input type="range" min="5" max="8" value="5" class="slider" data-multiplier="1" data-exponent="2" id="chunkSize">
+          <p>Chunk Size: <span class="sliderValue"></span></p>
+
+
+          <input type="range" min="10" max="60" value="30" class="slider" id="chunkDuration">
+          <p>Chunk Duration: <span class="sliderValue"></span></p>
+        </div>
+        <div class="card-body overflow-hidden">
+          <canvas id="interpolatedCanvas"></canvas>
+        </div>
       </div>
-      <div id="interpolateSelect2" class="select-style">
-        <select>
-          <option value="0">Whip It</option>
-          <option value="1" selected="selected">Freedom Of Choice</option>
-          <option value="2">Beautiful World</option>
-          <option value="3">Gut Feeling</option>
-        </select>
-      </div>
-      <button onclick="interpolate()"> Interpolate Input </button>
-      <button onclick="playInterpolation()">  Play Interpolation  </button>
-      <button onclick="stop()">Stop </button>
-
-      <br />
-
-      <input type="range" min="5" max="20" value="10" data-multiplier="0.1" class="slider" id="vaeTemp">
-      <p>Temperature: <span class="sliderValue"></span></p>
-
-      </br>
-
-      <input type="range" min="5" max="8" value="5" class="slider" data-multiplier="1" data-exponent="2" id="chunkSize">
-      <p>Chunk Size: <span class="sliderValue"></span></p>
-
-      </br>
-
-      <input type="range" min="10" max="60" value="30" class="slider" id="chunkDuration">
-      <p>Chunk Duration: <span class="sliderValue"></span></p>
-
-      </br>
-
-      <canvas id="interpolatedCanvas"></canvas>
-
-      <hr />
-      <hr />
 
       <!-- Begin Generate Section   -->
 
-      <button onclick="generate()">  Generate</button>
-      <button onclick="playGenerated()">  Play Generated  </button>
-      <button onclick="stop()">Stop </button>
+      <div class="card">
+        <div class="card-header">
+          <div class="input-group">
+            <div class="btn-group">
+              <button class="btn btn-secondary" onclick="generate()">  Generate</button>
+              <button class="btn btn-secondary" onclick="playGenerated()">  Play Generated  </button>
+              <button class="btn btn-secondary" onclick="stop()">Stop </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-header">
+          <input type="range" min="10" max="200" value="30" class="slider" id="rnnSteps">
+          <p>Step: <span class="sliderValue"></span></p>
 
-      </br>
+          <input type="range" min="5" max="20" value="10" data-multiplier="0.1" class="slider" id="rnnTemp">
+          <p>Temperature: <span class="sliderValue"></span></p>
 
-      <input type="range" min="10" max="200" value="30" class="slider" id="rnnSteps">
-      <p>Step: <span class="sliderValue"></span></p>
+        </div>
+        <div class="card-body overflow-hidden">
+          <canvas id="generatedCanvas"></canvas>
+        </div>
+      </div>
 
-      </br>
-
-      <input type="range" min="5" max="20" value="10" data-multiplier="0.1" class="slider" id="rnnTemp">
-      <p>Temperature: <span class="sliderValue"></span></p>
-
-      </br>
-
-      <canvas id="generatedCanvas"></canvas>
 
     </div> <!-- container -->
   </body>

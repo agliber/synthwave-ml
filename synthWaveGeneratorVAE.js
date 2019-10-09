@@ -35,7 +35,7 @@ function initModel(){
 // load default player
 // https://tensorflow.github.io/magenta-js/music/modules/_core_player_.html
 let player = new mm.Player(false, {
-  run: note => viz.redraw(note),
+  run: note => viz.redraw(note,true),
   stop: () => {}
 });
 
@@ -68,15 +68,15 @@ function toggleSoundFont() {
   }
   // adjust UI
   let playerInputs = document.querySelectorAll('input[name="player"]');
-  for (let input of playerInputs) {
-    input.parentElement.style.backgroundColor = "black";
-    input.parentElement.style.color = "#a5ff9b";
-  }
+  // for (let input of playerInputs) {
+  //   input.parentElement.style.backgroundColor = "black";
+  //   input.parentElement.style.color = "#a5ff9b";
+  // }
   let checkedInput = document.querySelector('input[name="player"]:checked');
-  checkedInput.parentElement.style.color = "black";
-  checkedInput.parentElement.style.backgroundColor = "#a5ff9b";
+  // checkedInput.parentElement.style.color = "black";
+  // checkedInput.parentElement.style.backgroundColor = "#a5ff9b";
 
-  if (checkedInput.value == "soundFont") {
+  if (checkedInput) {
     // use soundfont player
     // https://tensorflow.github.io/magenta-js/music/classes/_core_player_.soundfontplayer.html
     player = new mm.SoundFontPlayer(
@@ -85,7 +85,7 @@ function toggleSoundFont() {
       undefined,
       undefined,
       {
-        run: note => viz.redraw(note),
+        run: note => viz.redraw(note,true),
         stop: () => {}
       }
     );
@@ -93,7 +93,7 @@ function toggleSoundFont() {
     // use soundfont player
     // https://tensorflow.github.io/magenta-js/music/classes/_core_player_.player.html
     player = new mm.Player(false, {
-      run: note => viz.redraw(note),
+      run: note => viz.redraw(note,true),
       stop: () => {}
     });
   }
@@ -256,9 +256,8 @@ function playOriginal() {
   showLoading();
   let songIndex = document.querySelector("#originalSelect select").value;
   let seq = originals[songIndex];
-  let startTrim = document.querySelector("#trimStart").value;
   // https://tensorflow.github.io/magenta-js/music/modules/_core_sequences_.html#trim
-  seq = mm.sequences.trim(seq, startTrim, seq.totalTime);
+  seq = mm.sequences.trim(seq, 0, seq.totalTime);
   // https://tensorflow.github.io/magenta-js/music/modules/_core_sequences_.html#quantizenotesequence
   seq = mm.sequences.quantizeNoteSequence(seq, 4);
 
