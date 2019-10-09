@@ -27,6 +27,10 @@
       background-color: DARKSLATEGRAY !important;
     } */
 
+    #jumboImage {
+      background-image: url("./devoGlitchArt.png");
+      background-size: cover;
+    }
     .card {
       margin-top: 20px;
       /* background-color: DARKSLATEGRAY !important; */
