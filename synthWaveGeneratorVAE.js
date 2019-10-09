@@ -50,13 +50,15 @@ const config = {
 
 // show loading animation
 function showLoading(){
-  let loader = document.querySelector('#loader');
-  loader.style.display = "inline-block";
+  // let loader = document.querySelector('#loader');
+  // loader.style.display = "inline-block";
+  $('#loader').modal('show');
 }
 // hide loading animation
 function hideLoading(){
-  let loader = document.querySelector('#loader');
-  loader.style.display = "none";
+  // let loader = document.querySelector('#loader');
+  // loader.style.display = "none";
+  $('#loader').modal('hide');
 }
 
 toggleSoundFont();
@@ -308,17 +310,24 @@ let generatedNoteSequence;
 
 function generate() {
 
-  if(interpolatedNoteSequence === undefined){
-    alert("Needs interpolated input, to genreate from.");
-    return;
-  }
+  // if(interpolatedNoteSequence === undefined){
+  //   alert("Needs interpolated input, to genrate from.");
+  //   return;
+  // }
   showLoading();
   setTimeout(function(){
+
+    let songIndex = document.querySelector("#originalSelect select").value;
+    let seq = originals[songIndex];
+    // https://tensorflow.github.io/magenta-js/music/modules/_core_sequences_.html#trim
+    seq = mm.sequences.trim(seq, 0, seq.totalTime);
+    // https://tensorflow.github.io/magenta-js/music/modules/_core_sequences_.html#quantizenotesequence
+    seq = mm.sequences.quantizeNoteSequence(seq, 4);
 
     rnn_steps = Number(document.querySelector("#rnnSteps").value);
     rnn_temperature = Number(document.querySelector("#rnnTemp").value * 0.1);
     music_rnn
-      .continueSequence(interpolatedNoteSequence, rnn_steps, rnn_temperature)
+      .continueSequence(seq, rnn_steps, rnn_temperature)
       .then(sample => {
         viz = new mm.PianoRollCanvasVisualizer(
           sample,
@@ -333,10 +342,10 @@ function generate() {
 
 // Plays audio of generated note sequence in the browser
 function playGenerated() {
-  if(generatedNoteSequence === undefined){
-    alert("Needs have generated input to play.");
-    return;
-  }
+  // if(generatedNoteSequence === undefined){
+  //   alert("Needs have generated input to play.");
+  //   return;
+  // }
 
   showLoading();
   if (player.isPlaying()) {
