@@ -34,6 +34,7 @@ function initModel(){
 
 // load default player
 // https://tensorflow.github.io/magenta-js/music/modules/_core_player_.html
+let viz;
 let player = new mm.Player(false, {
   run: note => viz.redraw(note,true),
   stop: () => {}
@@ -243,10 +244,20 @@ function interpolateSequencePair(seq1, seq2) {
 
 // function to stop audio playing
 function stop() {
+  // let canvas = document.getElementById("originalCanvas");
+  // resetCanvas(canvas);
   if (player.isPlaying()) {
     player.stop();
     return;
   }
+}
+
+function resetCanvas(canvas){
+  console.log('here');
+  canvas.width = 0;
+  canvas.height = 0;
+  canvas.style = '';
+  return;
 }
 
 function playOriginal() {
@@ -255,6 +266,9 @@ function playOriginal() {
     player.stop();
     return;
   }
+  let canvas = document.getElementById("originalCanvas");
+  resetCanvas(canvas);
+
   showLoading();
   let songIndex = document.querySelector("#originalSelect select").value;
   let seq = originals[songIndex];
@@ -265,7 +279,7 @@ function playOriginal() {
 
   viz = new mm.PianoRollCanvasVisualizer(
     seq,
-    document.getElementById("originalCanvas"),
+    canvas,
     config
   );
   player.start(seq);
@@ -281,11 +295,13 @@ function interpolate() {
     let song1Index = document.querySelector("#interpolateSelect1 select").value;
     let song2Index = document.querySelector("#interpolateSelect2 select").value;
 
+
     interpolateSequencePair(originals[song1Index], originals[song2Index]).then(
       seq => {
+        let canvas = document.getElementById("interpolatedCanvas");
         viz = new mm.PianoRollCanvasVisualizer(
           seq,
-          document.getElementById("interpolatedCanvas"),
+          canvas,
           config
         );
         interpolatedNoteSequence = seq;
@@ -296,11 +312,25 @@ function interpolate() {
 }
 
 function playInterpolation() {
+
+
   showLoading();
   if (player.isPlaying()) {
     player.stop();
     return;
   }
+
+  let canvas = document.getElementById("interpolatedCanvas");
+  resetCanvas(canvas);
+  setTimeout(()=>{
+    viz = new mm.PianoRollCanvasVisualizer(
+      interpolatedNoteSequence,
+      canvas,
+      config
+    );
+  }, 200); // spin
+
+
 
   player.start(interpolatedNoteSequence);
   hideLoading();
@@ -329,9 +359,10 @@ function generate() {
     music_rnn
       .continueSequence(seq, rnn_steps, rnn_temperature)
       .then(sample => {
+        let canvas = document.getElementById("generatedCanvas");
         viz = new mm.PianoRollCanvasVisualizer(
           sample,
-          document.getElementById("generatedCanvas"),
+          canvas,
           config
         );
         generatedNoteSequence = sample;
@@ -346,12 +377,19 @@ function playGenerated() {
   //   alert("Needs have generated input to play.");
   //   return;
   // }
+  let canvas = document.getElementById("generatedCanvas");
+  resetCanvas(canvas);
 
   showLoading();
   if (player.isPlaying()) {
     player.stop();
     return;
   }
+  viz = new mm.PianoRollCanvasVisualizer(
+    generatedNoteSequence,
+    canvas,
+    config
+  );
   player.start(generatedNoteSequence);
   hideLoading();
 }
