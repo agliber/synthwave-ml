@@ -1,4 +1,7 @@
 # synthwave-ml
+
+See the project live: https://synthwaveml.netlify.com/
+
 ### Music/Machine Learning experimental research project inspired by [Prof. Scott Easley](https://viterbi.usc.edu/directory/faculty/Easley/Scott)
 ![CodePen Project Preview Screen Shot](https://github.com/adamliber/synthwave-ml/blob/master/CodePenPreview.PNG)
 
