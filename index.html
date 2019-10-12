@@ -2,116 +2,114 @@
 <html>
 
 <head>
-  <link href="synthWaveGeneratorVAE.css" rel="stylesheet">
-
-
+  <link href="./css/synthWaveGeneratorVAE.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link href="bootstrap.min.css" rel="stylesheet">
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.7.0"></script>
 </head>
 
-  <body>
-    <!-- loading animation visual. By default not displayed. Display triggered by showLoading() -->
-    <div class="modal" id="loader" >
-      <img src="./loader.gif" />
+<body>
+  <!-- loading animation visual. By default not displayed. Display triggered by showLoading() -->
+  <div class="modal" id="loader">
+    <img src="./media/loader.gif" />
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="jumbotron">
+          <div class="row">
+
+            <div class="col-md-4">
+              <img class="img-fluid rounded" src="./media/devoGlitchArt.png" />
+            </div>
+            <div class="col">
+              <h1 class="display-4">SynthwaveML feat.
+                <a href="https://en.wikipedia.org/wiki/Devo">Devo</a>
+              </h1>
+              <p class="lead">
+                Using machine learning to generate new music and
+                mimic a musical style.
+              </p>
+
+
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <hr />
+              <p>
+                This experiment focuses on the synthwave style of the band Devo.
+                This project is primarily built and based on the tools and
+                frameworks created by the Magenta Project.
+                Magenta is a creative research project started by
+                Google and contributed to by other non-affiliated hobbyists,
+                creatives, artists, and programmers.
+              </p>
+              <a class="btn btn-secondary btn-lg" href="https://github.com/adamliber/synthwave-ml" role="button">GitHub</a>
+              <a class="btn btn-secondary btn-lg" href="https://codepen.io/adamliber/pen/NmNgYp" role="button">CodePen</a>
+
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="jumbotron">
-            <div class="row">
 
-              <div class="col-md-4">
-                  <img class="img-fluid rounded" src="./devoGlitchArt.png" />
-              </div>
-              <div class="col">
-                <h1 class="display-4">SynthwaveML feat.
-                  <a href="https://en.wikipedia.org/wiki/Devo">Devo</a>
-                </h1>
-                <p class="lead">
-                  Using machine learning to generate new music and
-                  mimic a musical style.
-                </p>
-
-
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <hr />
-                <p>
-                  This experiment focuses on the synthwave style of the band Devo.
-                  This project is primarily built and based on the tools and
-                  frameworks created by the Magenta Project.
-                  Magenta is a creative research project started by
-                  Google and contributed to by other non-affiliated hobbyists,
-                  creatives, artists, and programmers.
-                </p>
-                <a class="btn btn-secondary btn-lg" href="https://github.com/adamliber/synthwave-ml" role="button">GitHub</a>
-                <a class="btn btn-secondary btn-lg" href="https://codepen.io/adamliber/pen/NmNgYp" role="button">CodePen</a>
-
-              </div>
-            </div>
-
-
-
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" checked="checked" class="custom-control-input" name="player" id="synth" value="synth" onclick="toggleSoundFont()">
+            <label class="custom-control-label" for="synth">Sound Font Player</label>
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="row">
+      <!-- Begin original Section   -->
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="input-group">
 
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="custom-control custom-switch">
-              <input type="checkbox" checked="checked" class="custom-control-input" name="player" id="synth" value="synth" onclick="toggleSoundFont()">
-              <label class="custom-control-label" for="synth">Sound Font Player</label>
+              <div id="originalSelect" class="select-style">
+                <select class="custom-select custom-select">
+                  <option value="0">Whip It</option>
+                  <option value="1">Freedom Of Choice</option>
+                  <option value="2">Beautiful World</option>
+                  <option value="3">Gut Feeling</option>
+                </select>
+              </div>
+
+              <div class="input-group-append" role="group">
+                <button class="btn btn-outline-success" onclick="playOriginal()"> Play </button>
+                <button class="btn btn-outline-success" onclick="stop()">Stop </button>
+              </div>
+
             </div>
+          </div>
+          <div class="card-body overflow-hidden">
+            <canvas id="originalCanvas"></canvas>
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <!-- Begin original Section   -->
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-header">
-              <div class="input-group">
-
-                <div id="originalSelect" class="select-style">
-                  <select class="custom-select custom-select">
-                    <option value="0">Whip It</option>
-                    <option value="1">Freedom Of Choice</option>
-                    <option value="2">Beautiful World</option>
-                    <option value="3">Gut Feeling</option>
-                  </select>
-                </div>
-
-                <div class="input-group-append" role="group">
-                  <button class="btn btn-outline-success" onclick="playOriginal()"> Play </button>
-                  <button class="btn btn-outline-success" onclick="stop()">Stop </button>
-                </div>
-
-              </div>
-            </div>
-            <div class="card-body overflow-hidden">
-              <canvas id="originalCanvas"></canvas>
-            </div>
-          </div>
-        </div>
-        <!-- Begin Generate Section   -->
-        <div class="col-lg-12">
-          <div class="card">
+      <!-- Begin Generate Section   -->
+      <div class="col-lg-12">
+        <div class="card">
           <div class="card-header">
             <div class="input-group">
               <div class="btn-group">
-                <button class="btn btn-outline-success" onclick="generate()">  Generate</button>
-                <button class="btn btn-outline-success" onclick="playGenerated()">  Play </button>
+                <button class="btn btn-outline-success" onclick="generate()"> Generate</button>
+                <button class="btn btn-outline-success" onclick="playGenerated()"> Play </button>
                 <button class="btn btn-outline-success" onclick="stop()">Stop </button>
               </div>
             </div>
@@ -132,11 +130,11 @@
             <canvas id="generatedCanvas"></canvas>
           </div>
         </div>
-        </div>
-        <!-- Begin Interpolate Section   -->
-        <div class="col-lg-12">
-          <div class="card">
-          <div class="card-header" >
+      </div>
+      <!-- Begin Interpolate Section   -->
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
             <div class="input-group">
               <div id="interpolateSelect1" class="select-style">
                 <select class="custom-select custom-select">
@@ -156,8 +154,8 @@
               </div>
               <div class="btn-group">
                 <button class="btn btn-outline-success" onclick="interpolate()"> Interpolate </button>
-                <button class="btn btn-outline-success" onclick="playInterpolation()">  Play  </button>
-                <button class="btn btn-outline-success"onclick="stop()">Stop </button>
+                <button class="btn btn-outline-success" onclick="playInterpolation()"> Play </button>
+                <button class="btn btn-outline-success" onclick="stop()">Stop </button>
               </div>
             </div>
           </div>
@@ -182,15 +180,18 @@
             <canvas id="interpolatedCanvas"></canvas>
           </div>
         </div>
-        </div>
-
       </div>
 
-    </div> <!-- container -->
-  </body>
-  <script type="text/javascript" src="./sequences/whipItSequence.js"></script>
-  <script type="text/javascript" src="./sequences/freedomOfChoiceSequence.js"></script>
-  <script type="text/javascript" src="./sequences/beautifulWorldSequence.js"></script>
-  <script type="text/javascript" src="./sequences/gutFeelingSequence.js"></script>
-  <script type="text/javascript" src="./synthWaveGeneratorVAE.js"></script>
+    </div>
+
+  </div> <!-- container -->
+</body>
+<script type="text/javascript" src="./sequences/whipItSequence.js"></script>
+<script type="text/javascript" src="./sequences/freedomOfChoiceSequence.js"></script>
+<script type="text/javascript" src="./sequences/beautifulWorldSequence.js"></script>
+<script type="text/javascript" src="./sequences/gutFeelingSequence.js"></script>
+<script type="text/javascript" src="./js/synthWaveGeneratorVAE.js"></script>
+<script type="text/javascript" src="./js/generate.js"></script>
+<script type="text/javascript" src="./js/interpolate.js"></script>
+
 </html>
