@@ -47,9 +47,9 @@ In this project we attempt to use a combination of methods of manipulating the i
 
 
 ## Helpful Resources:
-* [TensorFlow.js] (https://magenta.tensorflow.org/)
-* [p5.js] (https://p5js.org/)
-* [Tone.js] (https://tonejs.github.io/)
+* [TensorFlow.js](https://magenta.tensorflow.org/)
+* [p5.js](https://p5js.org/)
+* [Tone.js](https://tonejs.github.io/)
 
 ##### Magenta/Music
 sequences: https://tensorflow.github.io/magenta-js/music/modules/_core_sequences_   
